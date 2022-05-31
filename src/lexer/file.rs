@@ -4,7 +4,7 @@ use crate::types::File;
 
 use super::block;
 use super::error::ParseError;
-use super::utils::{block_newline, is_newline};
+use super::utils::block_newline;
 
 pub fn parser() -> impl Parser<char, File, Error = ParseError> {
     block::parser()
