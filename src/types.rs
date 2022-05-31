@@ -9,6 +9,7 @@ use serde::Serialize;
 pub enum Block {
     Paragraph(BlockParagraph),
     Heading(BlockHeading),
+    Code(BlockCode),
 }
 
 #[non_exhaustive]
@@ -41,6 +42,13 @@ pub struct BlockParagraph {
 pub struct BlockHeading {
     pub span: Span,
     pub level: usize,
+    pub content: Text,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(Serialize), serde(rename_all = "snake_case"))]
+pub struct BlockCode {
+    pub span: Span,
     pub content: Text,
 }
 

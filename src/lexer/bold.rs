@@ -17,9 +17,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    
 
     #[test]
-    fn block_parse() {
-    }
+    fn block_parse() {}
 }

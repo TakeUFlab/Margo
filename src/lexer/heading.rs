@@ -1,10 +1,9 @@
 use chumsky::prelude::*;
 
-
 use crate::types::{BlockHeading, Text};
 
 use super::error::ParseError;
-use super::utils::{is_newline};
+use super::utils::is_newline;
 
 pub fn parser() -> impl Parser<char, BlockHeading, Error = ParseError> {
     let token = just('#').repeated().at_least(1).map(|c| c.len());

@@ -1,11 +1,10 @@
 use chumsky::prelude::*;
 
+use crate::types::File;
 
-use crate::types::{File};
-
+use super::block;
 use super::error::ParseError;
 use super::utils::block_newline;
-use super::{block};
 
 pub fn parser() -> impl Parser<char, File, Error = ParseError> {
     block::parser()

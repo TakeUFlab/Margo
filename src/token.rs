@@ -2,7 +2,6 @@ use std::ops::Range;
 
 pub type Span = Range<usize>;
 
-
 pub trait Spanned {
     fn span(&self) -> Span;
 }

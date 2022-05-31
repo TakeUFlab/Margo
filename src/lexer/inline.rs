@@ -1,11 +1,8 @@
 use chumsky::prelude::*;
 
+use crate::types::Inline;
 
-use crate::types::{
-    Inline,
-};
-
-use super::error::{ParseError};
+use super::error::ParseError;
 
 use super::{bold, italic, linethrough, txt, underline};
 
