@@ -4,11 +4,24 @@ use crate::types::Inline;
 
 use super::error::ParseError;
 
-use super::{bold, italic, linethrough, txt, underline};
+use super::{bold, inline_code, italic, linethrough, math, txt, underline};
 
 pub fn parser() -> impl Parser<char, Inline, Error = ParseError> {
     recursive(|r| {
-        let txt = txt::parser().map(Inline::Text);
+        let txt = txt::parser_not(choice((
+            just(" *").or(just("* ")).ignored(),
+            just(" /").or(just("/ ")).ignored(),
+            just(" ~").or(just("~ ")).ignored(),
+            just(" _").or(just("_ ")).ignored(),
+            just(" $").or(just("$ ")).ignored(),
+            just(" `").or(just("` ")).ignored(),
+            text::newline(),
+        )))
+        .map(Inline::Text);
+
+        let code = inline_code::parser().map(Inline::Code);
+
+        let math = math::parser().map(Inline::Math);
 
         let bold = bold::parser(r.clone()).map(Inline::Bold);
 
@@ -18,7 +31,7 @@ pub fn parser() -> impl Parser<char, Inline, Error = ParseError> {
 
         let underline = underline::parser(r.clone()).map(Inline::Underline);
 
-        choice((bold, italic, linethrough, underline, txt))
+        choice((code, math, bold, italic, linethrough, underline, txt))
             .repeated()
             .at_least(1)
             .map(Inline::Inlines)
@@ -38,6 +51,7 @@ mod tests {
         //     .map(Inline::Text);
 
         // dbg!(txt.parse("sdfghj* ").unwrap());
-        dbg!(parser().parse_recovery_verbose("AAA * fghjkl *  _ there ~ fghjk ~ _ fghjk",));
+        dbg!(parser()
+            .parse_recovery_verbose("AAAfghjk _dfgh *bold* jkl_  ` *Hi* `  $\\frac{10}{11}$ \n",));
     }
 }

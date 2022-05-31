@@ -2,12 +2,18 @@ use chumsky::prelude::*;
 
 use crate::types::Text;
 
-use super::error::ParseError;
+use super::error::{ParseError, ParseLabel};
 
-pub fn parser() -> impl Parser<char, Text, Error = ParseError> {
-    none_of("\n\r\n*/~_")
-        .repeated()
-        .at_least(1)
+pub fn parser_not<T, K>(t: T) -> impl Parser<char, Text, Error = ParseError>
+where
+    T: Parser<char, K, Error = ParseError>,
+{
+    take_until(t.rewind())
+        .try_map(|(chars, _), span| {
+            (!chars.is_empty())
+                .then(|| chars)
+                .ok_or_else(|| ParseError::new(span).with_label(ParseLabel::CannotEmpty))
+        })
         .collect()
         .map_with_span(|content, span| Text { span, content })
 }

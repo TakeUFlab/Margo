@@ -21,6 +21,8 @@ pub enum Inline {
     Italic(InlineItalic),
     Underline(InlineUnderline),
     Linethrough(InlineLinethrough),
+    Code(InlineCode),
+    Math(InlineMath),
     Text(Text),
 }
 
@@ -78,6 +80,20 @@ pub struct InlineUnderline {
 pub struct InlineLinethrough {
     pub span: Span,
     pub content: Box<Inline>,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(Serialize), serde(rename_all = "snake_case"))]
+pub struct InlineCode {
+    pub span: Span,
+    pub content: Text,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(Serialize), serde(rename_all = "snake_case"))]
+pub struct InlineMath {
+    pub span: Span,
+    pub content: Text,
 }
 
 #[derive(Debug, Clone, PartialEq)]

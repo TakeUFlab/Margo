@@ -12,7 +12,7 @@ where
         span,
         content: Box::new(content),
     })
-    .delimited_by(just("~"), just("~"))
+    .delimited_by(just(" ~"), just("~ "))
 }
 
 #[cfg(test)]
