@@ -4,13 +4,18 @@ use crate::types::BlockCode;
 
 use super::error::ParseError;
 
-use super::txt;
+use super::{ident, txt};
 
 pub fn parser() -> impl Parser<char, BlockCode, Error = ParseError> {
     let tag = just("```");
-    tag.then(text::newline())
-        .ignore_then(txt::parser_until(tag))
-        .map_with_span(|content, span| BlockCode { span, content })
+    tag.ignore_then(ident::parser().or_not())
+        .then_ignore(text::newline())
+        .then(txt::parser_until(tag))
+        .map_with_span(|(lang, content), span| BlockCode {
+            span,
+            content,
+            lang,
+        })
 }
 
 #[cfg(test)]
@@ -20,5 +25,6 @@ mod tests {
     #[test]
     fn parse() {
         dbg!(parser().parse_recovery_verbose("```\nHi\n```"));
+        dbg!(parser().parse_recovery_verbose("```rust\nHi\n```"));
     }
 }

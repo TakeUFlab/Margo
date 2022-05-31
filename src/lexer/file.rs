@@ -4,14 +4,13 @@ use crate::types::File;
 
 use super::block;
 use super::error::ParseError;
-use super::utils::block_newline;
+use super::utils::{block_newline, is_newline};
 
 pub fn parser() -> impl Parser<char, File, Error = ParseError> {
     block::parser()
         .separated_by(block_newline())
-        .allow_leading()
-        .allow_trailing()
         .map(|content| File { content })
+        .padded_by(text::newline().repeated())
         .then_ignore(end())
 }
 

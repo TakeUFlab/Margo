@@ -1,4 +1,4 @@
-use crate::token::Span;
+use crate::token::{Ident, Span};
 
 #[cfg(feature = "serde")]
 use serde::Serialize;
@@ -51,6 +51,7 @@ pub struct BlockHeading {
 #[cfg_attr(feature = "serde", derive(Serialize), serde(rename_all = "snake_case"))]
 pub struct BlockCode {
     pub span: Span,
+    pub lang: Option<Ident>,
     pub content: Text,
 }
 
