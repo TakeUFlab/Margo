@@ -8,9 +8,13 @@ use super::error::ParseError;
 use super::heading;
 use super::utils::block_newline;
 
-// pub fn register(r: Recursive<'_, char, Vec<Inline>, ParseError>) {
-//     r.repeated().map(Inline::Text);
-// }
+pub fn parser() -> impl Parser<char, Text, Error = ParseError> {
+    none_of("\n\r\n*/~_")
+        .repeated()
+        .at_least(1)
+        .collect()
+        .map_with_span(|content, span| Text { span, content })
+}
 
 #[cfg(test)]
 mod tests {

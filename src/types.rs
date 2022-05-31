@@ -17,9 +17,9 @@ pub enum Block {
 pub enum Inline {
     Inlines(Vec<Inline>),
     Bold(InlineBold),
-    // Italic(InlineItalic),
-    // Underline(InlineUnderline),
-    // Linethrough(InlineLinethrough),
+    Italic(InlineItalic),
+    Underline(InlineUnderline),
+    Linethrough(InlineLinethrough),
     Text(Text),
 }
 
@@ -33,14 +33,14 @@ pub struct File {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct BlockParagraph {
     pub span: Span,
-    pub content: Vec<Inline>,
+    pub content: Inline,
 }
 
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct BlockHeading {
     pub span: Span,
-    pub token: Box<Token>,
+    pub level: usize,
     pub content: Text,
 }
 

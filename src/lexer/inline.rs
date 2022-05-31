@@ -1,45 +1,32 @@
 use chumsky::prelude::*;
 
 use crate::token::Token;
-use crate::types::{Block, BlockHeading, BlockParagraph, Inline, InlineBold, Text};
+use crate::types::{
+    Block, BlockHeading, BlockParagraph, Inline, InlineBold, InlineItalic, InlineLinethrough,
+    InlineUnderline, Text,
+};
 
 use super::error::{ParseError, ParseLabel};
-use super::utils::block_newline;
-use super::{bold, heading};
+use super::utils::{block_newline, is_newline};
+use super::{bold, heading, italic, linethrough, txt, underline};
 
 pub fn parser() -> impl Parser<char, Inline, Error = ParseError> {
     recursive(|r| {
-        // let bold = r
-        //     .clone()
-        //     .repeated()
-        //     .delimited_by(just(" *"), just("* "))
-        //     .map_with_span(|content, span| InlineBold {
-        //         span,
-        //         content: Box::new(Inline::Inlines(content)),
-        //     })
-        //     .map(Inline::Bold);
-        // let txt = take_until(until)
+        let txt = txt::parser().map(Inline::Text);
 
-        let txt = none_of("*/~_")
+        let bold = bold::parser(r.clone()).map(Inline::Bold);
+
+        let italic = italic::parser(r.clone()).map(Inline::Italic);
+
+        let linethrough = linethrough::parser(r.clone()).map(Inline::Linethrough);
+
+        let underline = underline::parser(r.clone()).map(Inline::Underline);
+
+        choice((bold, italic, linethrough, underline, txt))
             .repeated()
             .at_least(1)
-            .collect()
-            .map_with_span(|content, span| Inline::Text(Text { span, content }));
-
-        let bold = r
-            .clone()
-            .map_with_span(|content, span| {
-                Inline::Bold(InlineBold {
-                    span,
-                    content: Box::new(content),
-                })
-            })
-            .delimited_by(just(" *"), just("* "));
-
-        bold.or(txt)
-            .or(r.repeated().at_least(1).map(Inline::Inlines))
+            .map(Inline::Inlines)
     })
-    .then_ignore(end())
 }
 
 #[cfg(test)]
@@ -48,13 +35,13 @@ mod tests {
 
     #[test]
     fn block_parse() {
-        // let txt = take_until(just::<_, _, ParseError>("* "))
+        // let txt = take_until(justs::<_, _, ParseError>("* "))
         //     .map(|(chars, _)| chars)
         //     .collect()
         //     .map_with_span(|content, span| Text { span, content })
         //     .map(Inline::Text);
 
         // dbg!(txt.parse("sdfghj* ").unwrap());
-        dbg!(parser().parse_recovery_verbose("AAA *fghjkl* ",));
+        dbg!(parser().parse_recovery_verbose("AAA * fghjkl *  _ there ~ fghjk ~ _ fghjk",));
     }
 }

@@ -10,7 +10,10 @@ use super::{block, heading};
 pub fn parser() -> impl Parser<char, File, Error = ParseError> {
     block::parser()
         .separated_by(block_newline())
+        .allow_leading()
+        .allow_trailing()
         .map(|content| File { content })
+        .then_ignore(end())
 }
 
 #[cfg(test)]
