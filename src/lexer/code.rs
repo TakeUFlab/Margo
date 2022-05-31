@@ -1,10 +1,10 @@
 use chumsky::prelude::*;
 
-use crate::types::{BlockCode, BlockParagraph};
+use crate::types::BlockCode;
 
 use super::error::ParseError;
 
-use super::{inline, txt};
+use super::txt;
 
 pub fn parser() -> impl Parser<char, BlockCode, Error = ParseError> {
     let tag = just("```");

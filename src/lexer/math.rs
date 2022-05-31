@@ -1,6 +1,6 @@
 use chumsky::prelude::*;
 
-use crate::types::{Inline, InlineBold, InlineCode, InlineMath, Text};
+use crate::types::InlineMath;
 
 use super::{error::ParseError, txt};
 
