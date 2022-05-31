@@ -1,14 +1,13 @@
 use chumsky::prelude::*;
 
-use crate::token::Token;
+
 use crate::types::{
-    Block, BlockHeading, BlockParagraph, Inline, InlineBold, InlineItalic, InlineLinethrough,
-    InlineUnderline, Text,
+    Inline,
 };
 
-use super::error::{ParseError, ParseLabel};
-use super::utils::{block_newline, is_newline};
-use super::{bold, heading, italic, linethrough, txt, underline};
+use super::error::{ParseError};
+
+use super::{bold, italic, linethrough, txt, underline};
 
 pub fn parser() -> impl Parser<char, Inline, Error = ParseError> {
     recursive(|r| {

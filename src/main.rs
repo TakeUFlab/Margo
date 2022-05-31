@@ -9,7 +9,6 @@ use lexer::file;
 use std::fs;
 use std::path::PathBuf;
 use std::{error::Error, io::Write};
-use types::File;
 
 #[derive(Debug, Parser)]
 #[clap(author, version, about, long_about = None)]

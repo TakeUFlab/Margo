@@ -1,10 +1,10 @@
 use chumsky::prelude::*;
 
-use crate::token::Token;
-use crate::types::{Block, BlockHeading, Text};
+
+use crate::types::{Block};
 
 use super::error::ParseError;
-use super::utils::block_newline;
+
 use super::{heading, paragraph};
 
 pub fn parser() -> impl Parser<char, Block, Error = ParseError> {
@@ -16,7 +16,7 @@ pub fn parser() -> impl Parser<char, Block, Error = ParseError> {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    
 
     #[test]
     fn block_parse() {

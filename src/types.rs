@@ -1,4 +1,4 @@
-use crate::token::{Span, Token};
+use crate::token::{Span};
 
 #[cfg(feature = "serde")]
 use serde::Serialize;

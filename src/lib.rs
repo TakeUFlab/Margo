@@ -1,3 +1,3 @@
-mod lexer;
-mod types;
-mod token;
+pub mod lexer;
+pub mod types;
+pub mod token;

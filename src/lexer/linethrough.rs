@@ -1,6 +1,6 @@
 use chumsky::prelude::*;
 
-use crate::types::{Inline, InlineBold, InlineLinethrough};
+use crate::types::{Inline, InlineLinethrough};
 
 use super::error::ParseError;
 
@@ -17,7 +17,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    
 
     #[test]
     fn block_parse() {}
