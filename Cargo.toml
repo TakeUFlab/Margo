@@ -10,6 +10,7 @@ default = ["serde"]
 serde = ["dep:serde"]
 json = ["dep:serde_json", "serde"]
 cli = ["dep:clap"]
+hashing = []
 
 [[bin]]
 name = "margo"
@@ -28,8 +29,10 @@ version = "1.0.137"
 features = ["derive"]
 optional = true
 
-
 [dependencies.clap]
 version = "3.1.18"
 features = ["derive"]
 optional = true
+
+[workspace]
+members = ["margo-wasm"]

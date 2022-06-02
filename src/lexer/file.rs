@@ -1,15 +1,36 @@
-use chumsky::prelude::*;
-
-use crate::types::File;
-
 use super::block;
 use super::error::ParseError;
 use super::utils::block_newline;
+use crate::token::Span;
+use crate::traits::Hashing;
+use crate::types::{Block, File};
+use chumsky::prelude::*;
+use std::hash::Hash;
+
+impl File {
+    #[cfg(not(feature = "hashing"))]
+    pub fn new(content: Vec<Block>) -> Self {
+        Self { content }
+    }
+
+    #[cfg(feature = "hashing")]
+    pub fn new(content: Vec<Block>) -> Self {
+        let hash = content.hashing();
+        Self { content, hash }
+    }
+}
+
+#[cfg(feature = "hashing")]
+impl Hash for File {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        self.hash.hash(state);
+    }
+}
 
 pub fn parser() -> impl Parser<char, File, Error = ParseError> {
     block::parser()
         .separated_by(block_newline())
-        .map(|content| File { content })
+        .map(File::new)
         .padded_by(text::newline().repeated())
         .then_ignore(end())
 }

@@ -1,4 +1,5 @@
-use crate::token::{Span, Spanned};
+use crate::token::Span;
+use crate::traits::Spanned;
 use chumsky::Error;
 
 #[derive(Debug, Clone, PartialEq)]

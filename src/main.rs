@@ -1,7 +1,7 @@
-// // mod lexer;
 mod lexer;
 mod token;
 mod types;
+mod traits;
 
 use chumsky::Parser as _;
 use clap::{ArgEnum, Parser, Subcommand};

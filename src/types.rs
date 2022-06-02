@@ -4,7 +4,7 @@ use crate::token::{Ident, Span};
 use serde::Serialize;
 
 #[non_exhaustive]
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize), serde(rename_all = "snake_case"))]
 pub enum Block {
     Paragraph(BlockParagraph),
@@ -13,7 +13,7 @@ pub enum Block {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize), serde(rename_all = "snake_case"))]
 pub enum Inline {
     Inlines(Vec<Inline>),
@@ -26,80 +26,102 @@ pub enum Inline {
     Text(Text),
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
 #[cfg_attr(feature = "serde", derive(Serialize), serde(rename_all = "snake_case"))]
 pub struct File {
     pub content: Vec<Block>,
+    #[cfg(feature = "hashing")]
+    pub hash: u64,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
 #[cfg_attr(feature = "serde", derive(Serialize), serde(rename_all = "snake_case"))]
 pub struct BlockParagraph {
     pub span: Span,
     pub content: Inline,
+    #[cfg(feature = "hashing")]
+    pub hash: u64,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
 #[cfg_attr(feature = "serde", derive(Serialize), serde(rename_all = "snake_case"))]
 pub struct BlockHeading {
     pub span: Span,
     pub level: usize,
     pub content: Text,
+    #[cfg(feature = "hashing")]
+    pub hash: u64,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
 #[cfg_attr(feature = "serde", derive(Serialize), serde(rename_all = "snake_case"))]
 pub struct BlockCode {
     pub span: Span,
     pub lang: Option<Ident>,
     pub content: Text,
+    #[cfg(feature = "hashing")]
+    pub hash: u64,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
 #[cfg_attr(feature = "serde", derive(Serialize), serde(rename_all = "snake_case"))]
 pub struct InlineBold {
     pub span: Span,
     pub content: Box<Inline>,
+    #[cfg(feature = "hashing")]
+    pub hash: u64,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
 #[cfg_attr(feature = "serde", derive(Serialize), serde(rename_all = "snake_case"))]
 pub struct InlineItalic {
     pub span: Span,
     pub content: Box<Inline>,
+    #[cfg(feature = "hashing")]
+    pub hash: u64,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
 #[cfg_attr(feature = "serde", derive(Serialize), serde(rename_all = "snake_case"))]
 pub struct InlineUnderline {
     pub span: Span,
     pub content: Box<Inline>,
+    #[cfg(feature = "hashing")]
+    pub hash: u64,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
 #[cfg_attr(feature = "serde", derive(Serialize), serde(rename_all = "snake_case"))]
 pub struct InlineLinethrough {
     pub span: Span,
     pub content: Box<Inline>,
+    #[cfg(feature = "hashing")]
+    pub hash: u64,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
 #[cfg_attr(feature = "serde", derive(Serialize), serde(rename_all = "snake_case"))]
 pub struct InlineCode {
     pub span: Span,
     pub content: Text,
+    #[cfg(feature = "hashing")]
+    pub hash: u64,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
 #[cfg_attr(feature = "serde", derive(Serialize), serde(rename_all = "snake_case"))]
 pub struct InlineMath {
     pub span: Span,
     pub content: Text,
+    #[cfg(feature = "hashing")]
+    pub hash: u64,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
 #[cfg_attr(feature = "serde", derive(Serialize), serde(rename_all = "snake_case"))]
 pub struct Text {
     pub span: Span,
     pub content: String,
+    #[cfg(feature = "hashing")]
+    pub hash: u64,
 }

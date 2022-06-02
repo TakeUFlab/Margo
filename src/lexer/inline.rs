@@ -8,15 +8,18 @@ use super::{bold, inline_code, italic, linethrough, math, txt, underline};
 
 pub fn parser() -> impl Parser<char, Inline, Error = ParseError> {
     recursive(|r| {
-        let txt = txt::parser_not(choice((
-            just(" *").or(just("* ")).ignored(),
-            just(" /").or(just("/ ")).ignored(),
-            just(" ~").or(just("~ ")).ignored(),
-            just(" _").or(just("_ ")).ignored(),
-            just(" $").or(just("$ ")).ignored(),
-            just(" `").or(just("` ")).ignored(),
-            text::newline(),
-        )))
+        let txt = txt::parser_until(
+            choice((
+                just(" *").or(just("* ")).ignored(),
+                just(" /").or(just("/ ")).ignored(),
+                just(" ~").or(just("~ ")).ignored(),
+                just(" _").or(just("_ ")).ignored(),
+                just(" $").or(just("$ ")).ignored(),
+                just(" `").or(just("` ")).ignored(),
+                text::newline(),
+            ))
+            .rewind(),
+        )
         .map(Inline::Text);
 
         let code = inline_code::parser().map(Inline::Code);
