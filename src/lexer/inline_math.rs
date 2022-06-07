@@ -14,7 +14,7 @@ impl InlineMath {
 
     #[cfg(feature = "hashing")]
     pub fn new(span: Span, content: Text) -> Self {
-        let hash = content.hashing();
+        let hash = ("inline maths", &content).hashing();
         Self {
             span,
             content,

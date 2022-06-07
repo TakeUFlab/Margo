@@ -15,6 +15,6 @@ pub mod parse {
     pub use super::lexer::*;
 }
 
-pub fn parse(content: String) -> Result<types::File, Vec<lexer::error::ParseError>> {
+pub fn parse_string(content: String) -> Result<types::File, Vec<lexer::error::ParseError>> {
     lexer::file::parser().parse(content)
 }

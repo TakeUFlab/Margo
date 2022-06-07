@@ -4,7 +4,8 @@ use crate::token::{Ident, Span};
 use serde::Serialize;
 
 #[non_exhaustive]
-#[derive(Debug, Clone, Hash)]
+#[derive(Debug, Clone)]
+#[cfg_attr(feature = "hashing", derive(Hash))]
 #[cfg_attr(feature = "serde", derive(Serialize), serde(rename_all = "snake_case"))]
 pub enum Block {
     Paragraph(BlockParagraph),
@@ -13,7 +14,8 @@ pub enum Block {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Clone, Hash)]
+#[derive(Debug, Clone)]
+#[cfg_attr(feature = "hashing", derive(Hash))]
 #[cfg_attr(feature = "serde", derive(Serialize), serde(rename_all = "snake_case"))]
 pub enum Inline {
     Inlines(Vec<Inline>),

@@ -14,7 +14,7 @@ impl InlineCode {
 
     #[cfg(feature = "hashing")]
     pub fn new(span: Span, content: Text) -> Self {
-        let hash = content.hashing();
+        let hash = ("inline code", &content).hashing();
         Self {
             span,
             content,

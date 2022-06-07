@@ -18,7 +18,7 @@ impl BlockHeading {
 
     #[cfg(feature = "hashing")]
     pub fn new(span: Span, level: usize, content: Text) -> Self {
-        let hash = content.hashing();
+        let hash = (&level, &content).hashing();
         Self {
             span,
             level,

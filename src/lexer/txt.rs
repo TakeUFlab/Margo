@@ -16,7 +16,7 @@ impl Text {
 
     #[cfg(feature = "hashing")]
     pub fn new(span: Span, content: String) -> Self {
-        let hash = content.hashing();
+        let hash = ("text", &content).hashing();
         Self {
             span,
             content,

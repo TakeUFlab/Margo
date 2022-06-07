@@ -14,7 +14,7 @@ impl InlineLinethrough {
 
     #[cfg(feature = "hashing")]
     pub fn new(span: Span, content: Inline) -> Self {
-        let hash = content.hashing();
+        let hash = ("linethrough", &content).hashing();
         let content = Box::new(content);
         Self {
             span,

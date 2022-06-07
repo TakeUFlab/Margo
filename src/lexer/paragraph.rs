@@ -14,7 +14,7 @@ impl BlockParagraph {
 
     #[cfg(feature = "hashing")]
     pub fn new(span: Span, content: Inline) -> Self {
-        let hash = content.hashing();
+        let hash = ("paragraph", &content).hashing();
         Self {
             span,
             content,

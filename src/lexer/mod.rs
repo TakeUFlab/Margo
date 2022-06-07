@@ -9,7 +9,7 @@ pub mod inline;
 pub mod inline_code;
 pub mod italic;
 pub mod linethrough;
-pub mod math;
+pub mod inline_math;
 pub mod paragraph;
 pub mod txt;
 pub mod underline;

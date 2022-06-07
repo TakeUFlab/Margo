@@ -15,7 +15,7 @@ impl File {
 
     #[cfg(feature = "hashing")]
     pub fn new(content: Vec<Block>) -> Self {
-        let hash = content.hashing();
+        let hash = ("file", &content).hashing();
         Self { content, hash }
     }
 }

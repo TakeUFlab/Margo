@@ -18,7 +18,7 @@ impl BlockCode {
 
     #[cfg(feature = "hashing")]
     pub fn new(span: Span, content: Text, lang: Option<Ident>) -> Self {
-        let hash = content.hashing();
+        let hash = ("code", &lang, &content).hashing();
         Self {
             span,
             content,
