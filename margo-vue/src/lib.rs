@@ -36,11 +36,13 @@ impl Builder {
         Default::default()
     }
 
+    #[wasm_bindgen(js_name = setComponent)]
     pub fn set_component(mut self, key: Types, value: JsValue) -> Self {
         self.components.insert(key, value);
         self
     }
 
+    #[wasm_bindgen(js_name = getComponent)]
     pub fn get_component(&self, t: Types) -> Result<JsValue, JsError> {
         Ok(self
             .components
