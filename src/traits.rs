@@ -51,9 +51,9 @@ pub trait Render {
 
     fn render_text(&mut self, c: Text) -> Result<Self::Output, Self::Error>;
 
-    fn render_ident(&mut self, c: Ident) -> Result<Self::Output, Self::Error>;
+    // fn render_ident(&mut self, c: Ident) -> Result<Self::Output, Self::Error>;
 
-    fn render_span(&mut self, c: Span) -> Result<Self::Output, Self::Error>;
+    // fn render_span(&mut self, c: Span) -> Result<Self::Output, Self::Error>;
 
     // fn render_(&mut self, c: ) -> Result<Self::Output,Self::Error> {
     // }

@@ -8,6 +8,7 @@ use serde::Serialize;
 #[cfg_attr(feature = "hashing", derive(Hash))]
 #[cfg_attr(feature = "serde", derive(Serialize), serde(rename_all = "snake_case"))]
 pub enum Block {
+    Blocks(Vec<Block>),
     Paragraph(BlockParagraph),
     Heading(BlockHeading),
     Code(BlockCode),
@@ -31,7 +32,7 @@ pub enum Inline {
 #[derive(Debug, Clone)]
 #[cfg_attr(feature = "serde", derive(Serialize), serde(rename_all = "snake_case"))]
 pub struct File {
-    pub content: Vec<Block>,
+    pub content: Block,
     #[cfg(feature = "hashing")]
     pub hash: u64,
 }

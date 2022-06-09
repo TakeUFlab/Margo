@@ -8,7 +8,7 @@ use std::hash::Hash;
 
 impl BlockCode {
     #[cfg(not(feature = "hashing"))]
-    pub fn new(span: Span, content: Text) -> Self {
+    pub fn new(span: Span, content: Text, lang: Option<Ident>) -> Self {
         Self {
             span,
             content,

@@ -14,7 +14,7 @@ impl File {
     }
 
     #[cfg(feature = "hashing")]
-    pub fn new(content: Vec<Block>) -> Self {
+    pub fn new(content: Block) -> Self {
         let hash = ("file", &content).hashing();
         Self { content, hash }
     }
@@ -30,6 +30,7 @@ impl Hash for File {
 pub fn parser() -> impl Parser<char, File, Error = ParseError> {
     block::parser()
         .separated_by(block_newline())
+        .map(Block::Blocks)
         .map(File::new)
         .padded_by(text::newline().repeated())
         .then_ignore(end())
