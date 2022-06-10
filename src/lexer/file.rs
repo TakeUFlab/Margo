@@ -9,7 +9,7 @@ use std::hash::Hash;
 
 impl File {
     #[cfg(not(feature = "hashing"))]
-    pub fn new(content: Vec<Block>) -> Self {
+    pub fn new(content: Block) -> Self {
         Self { content }
     }
 

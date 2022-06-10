@@ -35,4 +35,4 @@ features = ["derive"]
 optional = true
 
 [workspace]
-members = ["margo-wasm","margo-vue"]
+members = ["margo-wasm","margo-vue/margo-vue"]

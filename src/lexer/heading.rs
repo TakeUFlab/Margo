@@ -40,7 +40,7 @@ pub fn parser() -> impl Parser<char, BlockHeading, Error = ParseError> {
 
     token
         .padded()
-        .then(txt::parser_until(text::newline()))
+        .then(txt::parser_until(text::newline().rewind()))
         .map_with_span(|(level, content), span| BlockHeading::new(span, level, content))
 }
 
