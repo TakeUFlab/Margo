@@ -65,7 +65,7 @@ impl Render for Builder {
     fn render_file(&mut self, c: margo::tokenstream::File) -> Result<Self::Output, Self::Error> {
         Ok(H::new()
             .component(self.get_component(Types::File)?)
-            .add_property("key", c.hash)
+            .add_property("key", js_hash(c.hash))
             .add_child(self.render_block(c.content)?)
             .h())
     }
@@ -91,8 +91,8 @@ impl Render for Builder {
         c: margo::tokenstream::BlockHeading,
     ) -> Result<Self::Output, Self::Error> {
         Ok(H::new()
-            .component(self.get_component(Types::BlockCode)?)
-            .add_property("key", c.hash)
+            .component(self.get_component(Types::BlockHeading)?)
+            .add_property("key", js_hash(c.hash))
             .add_property("level", c.level)
             .add_child(self.render_text(c.content)?)
             .h())
@@ -104,7 +104,7 @@ impl Render for Builder {
     ) -> Result<Self::Output, Self::Error> {
         Ok(H::new()
             .component(self.get_component(Types::BlockParagraph)?)
-            .add_property("key", c.hash)
+            .add_property("key", js_hash(c.hash))
             .add_child(self.render_inline(c.content)?)
             .h())
     }
@@ -115,7 +115,7 @@ impl Render for Builder {
     ) -> Result<Self::Output, Self::Error> {
         Ok(H::new()
             .component(self.get_component(Types::BlockCode)?)
-            .add_property("key", c.hash)
+            .add_property("key", js_hash(c.hash))
             .add_property("lang", c.lang.map(|x| x.content))
             .add_child(self.render_text(c.content)?)
             .h())
@@ -150,7 +150,7 @@ impl Render for Builder {
     ) -> Result<Self::Output, Self::Error> {
         Ok(H::new()
             .component(self.get_component(Types::InlineBold)?)
-            .add_property("key", c.hash)
+            .add_property("key", js_hash(c.hash))
             .add_child(self.render_inline(*c.content)?)
             .h())
     }
@@ -161,7 +161,7 @@ impl Render for Builder {
     ) -> Result<Self::Output, Self::Error> {
         Ok(H::new()
             .component(self.get_component(Types::InlineCode)?)
-            .add_property("key", c.hash)
+            .add_property("key", js_hash(c.hash))
             .add_child(self.render_text(c.content)?)
             .h())
     }
@@ -172,7 +172,7 @@ impl Render for Builder {
     ) -> Result<Self::Output, Self::Error> {
         Ok(H::new()
             .component(self.get_component(Types::InlineItalic)?)
-            .add_property("key", c.hash)
+            .add_property("key", js_hash(c.hash))
             .add_child(self.render_inline(*c.content)?)
             .h())
     }
@@ -183,7 +183,7 @@ impl Render for Builder {
     ) -> Result<Self::Output, Self::Error> {
         Ok(H::new()
             .component(self.get_component(Types::InlineLinethrough)?)
-            .add_property("key", c.hash)
+            .add_property("key", js_hash(c.hash))
             .add_child(self.render_inline(*c.content)?)
             .h())
     }
@@ -194,7 +194,7 @@ impl Render for Builder {
     ) -> Result<Self::Output, Self::Error> {
         Ok(H::new()
             .component(self.get_component(Types::InlineMath)?)
-            .add_property("key", c.hash)
+            .add_property("key", js_hash(c.hash))
             .add_child(self.render_text(c.content)?)
             .h())
     }
@@ -205,7 +205,7 @@ impl Render for Builder {
     ) -> Result<Self::Output, Self::Error> {
         Ok(H::new()
             .component(self.get_component(Types::InlineUnderline)?)
-            .add_property("key", c.hash)
+            .add_property("key", js_hash(c.hash))
             .add_child(self.render_inline(*c.content)?)
             .h())
     }
@@ -213,8 +213,12 @@ impl Render for Builder {
     fn render_text(&mut self, c: margo::tokenstream::Text) -> Result<Self::Output, Self::Error> {
         Ok(H::new()
             .component(self.get_component(Types::Text)?)
-            .add_property("key", c.hash)
+            .add_property("key", js_hash(c.hash))
             .add_child(c.content)
             .h())
     }
+}
+
+fn js_hash(h: u64) -> usize {
+    (h % usize::MAX as u64) as usize
 }

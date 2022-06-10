@@ -1,14 +1,19 @@
 <style lang="sass" scoped>
+  
 </style>
 <script setup lang="ts">
-import { h, useSlots } from 'vue';
-const props = defineProps<{ level: Number }>()
-const slot = useSlots()
+defineProps<{ level: string }>()
+</script>
+<script lang="ts">
+import { defineComponent, h } from 'vue';
 
-function render() {
-    return h(
-        `h${props.level}`,
-        slot
-    )
-}
+export default defineComponent({
+    render() {
+        return h(
+            `h${this.$props.level}`,
+            null,
+            this.$slots
+        )
+    }
+})
 </script>

@@ -13,5 +13,8 @@ wasm-bindgen = "0.2"
 js-sys = "0.3"
 
 [dependencies.margo]
-path = "../"
+path = "../../"
 features = ["hashing"]
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = false

@@ -1,10 +1,10 @@
-use js_sys::Map;
+use js_sys::{Object, Reflect};
 use std::collections::HashMap;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen(module = "vue")]
 extern "C" {
-    pub fn h(s: JsValue, p: JsValue, c: Box<[JsValue]>) -> JsValue;
+    pub fn h(s: JsValue, p: Object, c: Box<[JsValue]>) -> JsValue;
 }
 
 #[derive(Default)]
@@ -42,13 +42,10 @@ impl H {
     }
 
     pub fn h(self) -> JsValue {
-        h(
-            self.s,
-            self.p
-                .into_iter()
-                .fold(Map::new(), |acc, (key, value)| acc.set(&key.into(), &value))
-                .into(),
-            self.c.into_boxed_slice(),
-        )
+        let obj = Object::new();
+        for (k, v) in self.p {
+            Reflect::set(&obj, &k.into(), &v).unwrap();
+        }
+        h(self.s, obj, self.c.into_boxed_slice())
     }
 }
