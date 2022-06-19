@@ -10,12 +10,28 @@ pub fn parser() -> impl Parser<char, Inline, Error = ParseError> {
     recursive(|r| {
         let txt = txt::parser_until(
             choice((
-                just(" *").or(just("* ")).ignored(),
-                just(" /").or(just("/ ")).ignored(),
-                just(" ~").or(just("~ ")).ignored(),
-                just(" _").or(just("_ ")).ignored(),
-                just(" $").or(just("$ ")).ignored(),
-                just(" `").or(just("` ")).ignored(),
+                just(" ")
+                    .then(choice((
+                        just("*"),
+                        just("/"),
+                        just("~"),
+                        just("_"),
+                        just("$"),
+                        just("`"),
+                        just("="),
+                    )))
+                    .ignored(),
+                choice((
+                    just("*"),
+                    just("/"),
+                    just("~"),
+                    just("_"),
+                    just("$"),
+                    just("`"),
+                    just("="),
+                ))
+                .then(just(" "))
+                .ignored(),
                 text::newline(),
             ))
             .rewind(),
