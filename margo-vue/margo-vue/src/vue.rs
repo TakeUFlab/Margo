@@ -4,7 +4,7 @@ use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen(module = "vue")]
 extern "C" {
-    pub fn h(s: JsValue, p: Object, c: Box<[JsValue]>) -> JsValue;
+    pub fn h(s: JsValue, p: Object, c: &Closure<dyn Fn() -> Box<[JsValue]>>) -> JsValue;
 }
 
 #[derive(Default)]
@@ -46,6 +46,11 @@ impl H {
         for (k, v) in self.p {
             Reflect::set(&obj, &k.into(), &v).unwrap();
         }
-        h(self.s, obj, self.c.into_boxed_slice())
+        let f =
+            Closure::wrap(Box::new(move || self.c.clone().into_boxed_slice())
+                as Box<dyn Fn() -> Box<[JsValue]>>);
+        let out = h(self.s, obj, &f);
+        f.forget();
+        out
     }
 }

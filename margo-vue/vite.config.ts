@@ -1,7 +1,6 @@
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import wasmPack from 'vite-plugin-wasm-pack';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -9,7 +8,8 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": resolve(__dirname, "src")
-    }
+    },
+    dedupe: ["vue"]
   },
   build: {
     lib: {
@@ -18,11 +18,13 @@ export default defineConfig({
       fileName: (f) => `margo.${f}.js`
     },
     rollupOptions: {
-      external: ["vue"],
+      external: ["vue", "highlight.js", "katex", "@highlightjs/vue-plugin"],
 
       output: {
         globals: {
           vue: "Vue",
+          "highlight.js": "hljs",
+          "@highlightjs/vue-plugin": "hljsVuePlugin"
         }
       }
     }

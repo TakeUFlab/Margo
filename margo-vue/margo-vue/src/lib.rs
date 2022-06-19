@@ -117,7 +117,7 @@ impl Render for Builder {
             .component(self.get_component(Types::BlockCode)?)
             .add_property("key", js_hash(c.hash))
             .add_property("lang", c.lang.map(|x| x.content))
-            .add_child(self.render_text(c.content)?)
+            .add_property("content", c.content.content)
             .h())
     }
 
@@ -162,7 +162,7 @@ impl Render for Builder {
         Ok(H::new()
             .component(self.get_component(Types::InlineCode)?)
             .add_property("key", js_hash(c.hash))
-            .add_child(self.render_text(c.content)?)
+            .add_property("content", c.content.content)
             .h())
     }
 
@@ -195,7 +195,7 @@ impl Render for Builder {
         Ok(H::new()
             .component(self.get_component(Types::InlineMath)?)
             .add_property("key", js_hash(c.hash))
-            .add_child(self.render_text(c.content)?)
+            .add_property("content", c.content.content)
             .h())
     }
 
