@@ -46,7 +46,6 @@ pub fn parser() -> impl Parser<char, BlockHeading, Error = ParseError> {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
 
     // #[test]
     // fn heading_parse() {

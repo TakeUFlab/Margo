@@ -1,7 +1,6 @@
 use super::block;
 use super::error::ParseError;
 use super::utils::block_newline;
-use crate::token::Span;
 use crate::traits::Hashing;
 use crate::types::{Block, File};
 use chumsky::prelude::*;
