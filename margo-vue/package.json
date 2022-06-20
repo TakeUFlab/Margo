@@ -1,14 +1,13 @@
 {
   "name": "margo-vue",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
-    "build": "wasm-pack build -t web ./margo-vue && vite build && vue-tsc --emitDeclarationOnly"
+    "build": "wasm-pack build -t web ./margo-wasm-vue && vite build && vue-tsc --emitDeclarationOnly"
   },
   "dependencies": {
-    "@highlightjs/vue-plugin": "^2.1.0",
     "highlight.js": "^11.5.1",
     "katex": "^0.16.0",
-    "margo-vue": "link:margo-vue/pkg",
+    "margo-wasm-vue": "link:margo-wasm-vue/pkg",
     "vue": "^3.2.25"
   },
   "devDependencies": {
