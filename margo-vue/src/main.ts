@@ -1,4 +1,4 @@
-import init, { Builder, Types } from 'margo-vue'
+import init, { Builder, Types } from 'margo-wasm-vue'
 import File from "@/components/File.vue"
 import Block from "@/components/Block.vue"
 import Code from "@/components/Code.vue"

@@ -18,13 +18,12 @@ export default defineConfig({
       fileName: (f) => `margo.${f}.js`
     },
     rollupOptions: {
-      external: ["vue", "highlight.js", "katex", "@highlightjs/vue-plugin"],
+      external: ["vue", "highlight.js", "katex", "margo-wasm-vue"],
 
       output: {
         globals: {
           vue: "Vue",
           "highlight.js": "hljs",
-          "@highlightjs/vue-plugin": "hljsVuePlugin"
         }
       }
     }

@@ -1,7 +1,12 @@
 [package]
-name = "margo-vue"
-version = "0.1.0"
+name = "margo-wasm-vue"
+version = "0.1.1"
 edition = "2021"
+authors = ["KAIYOHUGO"]
+description = "💠 A Fast Markdown-like Language In Vue, It's Simple"
+repository = "https://github.com/TakeUFlab/Margo"
+license = "MIT"
+
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -17,6 +22,7 @@ path = "../../"
 features = ["hashing"]
 
 [profile.release]
+lto = true
 opt-level = 'z'
 
 [package.metadata.wasm-pack.profile.release]

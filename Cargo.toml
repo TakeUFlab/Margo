@@ -3,7 +3,7 @@ name = "margo"
 version = "0.1.0"
 edition = "2021"
 authors = ["KAIYOHUGO"]
-description = "A Markdown-like Mark Language, It's Simple"
+description = "💠 A Fast Markdown-like Language, It's Simple"
 
 [features]
 default = ["serde"]
@@ -35,4 +35,4 @@ features = ["derive"]
 optional = true
 
 [workspace]
-members = ["margo-wasm","margo-vue/margo-vue"]
+members = ["margo-wasm","margo-vue/margo-wasm-vue"]
