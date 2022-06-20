@@ -1,6 +1,12 @@
 {
   "name": "margo-vue",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "description": "💠 A Fast Markdown-like Language In Vue, It's Simple (With Buildin Template)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TakeUFlab/Margo"
+  },
+  "license": "MIT",
   "scripts": {
     "build": "wasm-pack build -t web ./margo-wasm-vue && vite build && vue-tsc --emitDeclarationOnly"
   },
