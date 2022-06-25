@@ -2,7 +2,7 @@ use chumsky::prelude::*;
 
 use crate::types::Inline;
 
-use super::error::ParseError;
+use super::error::{ParseError, ParseLabel};
 
 use super::{bold, inline_code, inline_math, italic, linethrough, txt, underline};
 
@@ -54,6 +54,7 @@ pub fn parser() -> impl Parser<char, Inline, Error = ParseError> {
             .repeated()
             .at_least(1)
             .map(Inline::Inlines)
+            .labelled(ParseLabel::NotAInline)
     })
 }
 

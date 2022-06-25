@@ -36,14 +36,15 @@ pub fn parser_until<T, K>(t: T) -> impl Parser<char, Text, Error = ParseError>
 where
     T: Parser<char, K, Error = ParseError>,
 {
-    take_until(t)
-        .try_map(|(chars, _), span| {
-            (!chars.is_empty())
-                .then(|| chars)
-                .ok_or_else(|| ParseError::new(span).with_label(ParseLabel::CannotEmpty))
+    take_until(t.labelled(ParseLabel::MissingEnd))
+        .map_with_span(|(content, _), span| Text::new(span, String::from_iter(content)))
+        .try_map(|t, span| {
+            if t.content.is_empty() {
+                Err(ParseError::new(span, ParseLabel::CannotEmpty))
+            } else {
+                Ok(t)
+            }
         })
-        .collect()
-        .map_with_span(|content, span| Text::new(span, content))
 }
 
 #[cfg(test)]

@@ -1,5 +1,5 @@
 use super::block;
-use super::error::ParseError;
+use super::error::{ParseError, ParseLabel};
 use super::utils::block_newline;
 use crate::traits::Hashing;
 use crate::types::{Block, File};
@@ -27,12 +27,19 @@ impl Hash for File {
 }
 
 pub fn parser() -> impl Parser<char, File, Error = ParseError> {
-    block::parser()
-        .separated_by(block_newline())
-        .map(Block::Blocks)
-        .map(File::new)
-        .padded_by(text::newline().repeated())
-        .then_ignore(end())
+    text::newline().repeated().ignore_then(
+        block::parser()
+            .separated_by(block_newline())
+            .map(Block::Blocks)
+            .map(File::new)
+            .padded_by(
+                text::newline()
+                    .repeated()
+                    .at_least(1)
+                    .labelled(ParseLabel::MissingNewline),
+            )
+            .then_ignore(end()),
+    )
 }
 
 #[cfg(test)]
