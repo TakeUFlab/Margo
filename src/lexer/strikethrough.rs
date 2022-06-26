@@ -1,11 +1,11 @@
 use super::error::ParseError;
 use crate::token::Span;
 use crate::traits::Hashing;
-use crate::types::{Inline, InlineLinethrough};
+use crate::types::{Inline, InlineStrikethrough};
 use chumsky::prelude::*;
 use std::hash::Hash;
 
-impl InlineLinethrough {
+impl InlineStrikethrough {
     #[cfg(not(feature = "hashing"))]
     pub fn new(span: Span, content: Inline) -> Self {
         let content = Box::new(content);
@@ -25,17 +25,17 @@ impl InlineLinethrough {
 }
 
 #[cfg(feature = "hashing")]
-impl Hash for InlineLinethrough {
+impl Hash for InlineStrikethrough {
     fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
         self.hash.hash(state);
     }
 }
 
-pub fn parser<T>(r: T) -> impl Parser<char, InlineLinethrough, Error = ParseError>
+pub fn parser<T>(r: T) -> impl Parser<char, InlineStrikethrough, Error = ParseError>
 where
     T: Parser<char, Inline, Error = ParseError>,
 {
-    r.map_with_span(|content, span| InlineLinethrough::new(span, content))
+    r.map_with_span(|content, span| InlineStrikethrough::new(span, content))
         .delimited_by(just(" ~"), just("~ "))
 }
 

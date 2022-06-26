@@ -1,7 +1,7 @@
 use crate::token::Span;
 use crate::traits::Spanned;
 use chumsky::Error;
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum ParseLabel {

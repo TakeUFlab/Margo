@@ -136,7 +136,7 @@ impl Render for Builder {
             margo::tokenstream::Inline::Bold(v) => self.render_inline_bold(v),
             margo::tokenstream::Inline::Italic(v) => self.render_inline_italic(v),
             margo::tokenstream::Inline::Underline(v) => self.render_inline_underline(v),
-            margo::tokenstream::Inline::Linethrough(v) => self.render_inline_linethrough(v),
+            margo::tokenstream::Inline::Strikethrough(v) => self.render_inline_strikethrough(v),
             margo::tokenstream::Inline::Code(v) => self.render_inline_code(v),
             margo::tokenstream::Inline::Math(v) => self.render_inline_math(v),
             margo::tokenstream::Inline::Text(v) => self.render_text(v),
@@ -177,9 +177,9 @@ impl Render for Builder {
             .h())
     }
 
-    fn render_inline_linethrough(
+    fn render_inline_strikethrough(
         &mut self,
-        c: margo::tokenstream::InlineLinethrough,
+        c: margo::tokenstream::InlineStrikethrough,
     ) -> Result<Self::Output, Self::Error> {
         Ok(H::new()
             .component(self.get_component(Types::InlineLinethrough)?)

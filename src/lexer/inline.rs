@@ -4,7 +4,7 @@ use crate::types::Inline;
 
 use super::error::{ParseError, ParseLabel};
 
-use super::{bold, inline_code, inline_math, italic, linethrough, txt, underline};
+use super::{bold, inline_code, inline_math, italic, strikethrough, txt, underline};
 
 pub fn parser() -> impl Parser<char, Inline, Error = ParseError> {
     recursive(|r| {
@@ -46,7 +46,7 @@ pub fn parser() -> impl Parser<char, Inline, Error = ParseError> {
 
         let italic = italic::parser(r.clone()).map(Inline::Italic);
 
-        let linethrough = linethrough::parser(r.clone()).map(Inline::Linethrough);
+        let linethrough = strikethrough::parser(r.clone()).map(Inline::Strikethrough);
 
         let underline = underline::parser(r.clone()).map(Inline::Underline);
 

@@ -6,7 +6,12 @@ use serde::Serialize;
 #[non_exhaustive]
 #[derive(Debug, Clone)]
 #[cfg_attr(feature = "hashing", derive(Hash))]
-#[cfg_attr(feature = "serde", derive(Serialize), serde(rename_all = "snake_case"))]
+#[cfg_attr(
+    feature = "serde",
+    derive(Serialize),
+    serde(rename_all = "snake_case"),
+    serde(tag = "type")
+)]
 pub enum Block {
     Blocks(Vec<Block>),
     Paragraph(BlockParagraph),
@@ -17,13 +22,18 @@ pub enum Block {
 #[non_exhaustive]
 #[derive(Debug, Clone)]
 #[cfg_attr(feature = "hashing", derive(Hash))]
-#[cfg_attr(feature = "serde", derive(Serialize), serde(rename_all = "snake_case"))]
+#[cfg_attr(
+    feature = "serde",
+    derive(Serialize),
+    serde(rename_all = "snake_case"),
+    serde(tag = "type")
+)]
 pub enum Inline {
     Inlines(Vec<Inline>),
     Bold(InlineBold),
     Italic(InlineItalic),
     Underline(InlineUnderline),
-    Linethrough(InlineLinethrough),
+    Strikethrough(InlineStrikethrough),
     Code(InlineCode),
     Math(InlineMath),
     Text(Text),
@@ -95,7 +105,7 @@ pub struct InlineUnderline {
 
 #[derive(Debug, Clone)]
 #[cfg_attr(feature = "serde", derive(Serialize), serde(rename_all = "snake_case"))]
-pub struct InlineLinethrough {
+pub struct InlineStrikethrough {
     pub span: Span,
     pub content: Box<Inline>,
     #[cfg(feature = "hashing")]

@@ -40,9 +40,9 @@ pub trait Render {
 
     fn render_inline_italic(&mut self, c: InlineItalic) -> Result<Self::Output, Self::Error>;
 
-    fn render_inline_linethrough(
+    fn render_inline_strikethrough(
         &mut self,
-        c: InlineLinethrough,
+        c: InlineStrikethrough,
     ) -> Result<Self::Output, Self::Error>;
 
     fn render_inline_math(&mut self, c: InlineMath) -> Result<Self::Output, Self::Error>;
