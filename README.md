@@ -2,9 +2,6 @@
 
 A WIP Markdown-Like Lexer
 
-
-PLS Read [syntax design](./SYNTAX.md)
-
 # Dev
 
 We use [just](https://github.com/casey/just) as command runner. 
@@ -39,3 +36,33 @@ OPTIONS:
     -h, --help               Print help information
     -o, --output <OUTPUT>    
 ```
+
+# Roadmap
+
+## Todo
+
+- Block
+  - [x] Heading (`# {{text}}`,`## {{text}}`...) 
+  - [x] Paragraph (...)
+  - [x] Code (` ```{{lang}}\n{{text}}``` `)
+  - [ ] List
+- Inline
+  - [x] Bold (` *{{inline}}* `)
+  - [x] Italic (` /{{inline}}/ `)
+  - [x] Underline (` _{{inline}}_ `)
+  - [x] Strikethrough (` ~{{inline}}~ `)
+  - [x] Inline Code (`` `{{text}}` ``)
+  - [x] Inline Math (` ${{text}}$ `)
+  - [ ] Marker
+  - [ ] Emoji
+  - [ ] Image
+  - [ ] URL
+
+*(You need add newline in the end of file)
+
+*(block separatorm is two newline)
+
+## RFC
+
+- Bullet Journal (`[.]`,`[~]`,`[!]`,`[>]`,`[<]`) 
+- Embed
