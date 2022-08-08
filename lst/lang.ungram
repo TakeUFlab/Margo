@@ -1,0 +1,48 @@
+File =
+  Block
+
+Block =
+  (Heading
+| Paragraph
+| Code
+| Math)*
+
+Heading =
+  '#'* ' ' Inline
+
+Paragraph =
+  Inline
+
+Code =
+  '```' lang:'langtag'? content:'text' '```'
+
+Math =
+  '$$$' content:'text' '$$$'
+
+Inline =
+  (Bold
+| Italic
+| Underline
+| Strikethrough
+| LineCode
+| LineMath
+| 'text')*
+
+Bold =
+  ' *' content:Inline '* '
+
+Italic
+  ' /' content:Inline '/ '
+
+Underline
+  ' _' content:Inline '_ '
+
+Strikethrough =
+  ' ~' content:Inline '~ '
+
+LineCode =
+  ' `' 'text' '` '
+
+LineMath =
+  ' $' 'text' '$ '
+

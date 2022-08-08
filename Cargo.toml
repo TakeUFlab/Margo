@@ -19,6 +19,7 @@ required-features = ["serde", "cli", "json"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [dependencies]
 chumsky = "0.8"
+expect-test = "1.4"
 
 [dependencies.serde_json]
 version = "1.0"
@@ -35,4 +36,4 @@ features = ["derive"]
 optional = true
 
 [workspace]
-members = ["margo-wasm","margo-vue/margo-wasm-vue"]
+members = ["margo-wasm", "margo-vue/margo-wasm-vue", "lst"]
